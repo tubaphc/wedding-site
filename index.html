@@ -56,9 +56,6 @@
             }
         }
     </style>
-
-
-  </style>
 <style>
   .w-form .w-form-done, .w-form .w-form-fail { display: none; }
 </style>
@@ -563,55 +560,85 @@
     <script src="js/webflow.schunk.51a4289a6e5774e8.js" type="text/javascript"></script>
     <script src="js/webflow.0b798d3d.7c53ad578c703ad3.js" type="text/javascript"></script>
 <script>
-(() => {
+(function () {
   const form = document.getElementById('wf-form-RSVP-Form');
   if (!form) return;
+
+  // Chặn Webflow redirect & handler mặc định
+  form.removeAttribute('data-redirect');
+  form.removeAttribute('redirect');
+  form.setAttribute('novalidate', '');
+
   const wrap = form.closest('.w-form') || form.parentElement;
   const done = wrap ? wrap.querySelector('.w-form-done') : null;
   const fail = wrap ? wrap.querySelector('.w-form-fail') : null;
 
+  // Ẩn sẵn 2 khối trạng thái
   if (done) done.style.display = 'none';
   if (fail) fail.style.display = 'none';
 
-  form.removeAttribute('data-redirect');
-  form.removeAttribute('redirect');
+  // Helper đổi trạng thái nút
+  const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+  const setBtn = (txt, disabled) => {
+    if (!submitBtn) return;
+    submitBtn.disabled = !!disabled;
+    submitBtn.dataset.orig = submitBtn.dataset.orig || ('value' in submitBtn ? submitBtn.value : submitBtn.textContent);
+    if (txt != null) {
+      if ('value' in submitBtn) submitBtn.value = txt;
+      else submitBtn.textContent = txt;
+    }
+  };
 
-  form.addEventListener('submit', (ev) => {
+  // Helper hiển thị khối trạng thái
+  const showState = (which) => {
+    if (which === 'done') {
+      if (fail) fail.style.display = 'none';
+      if (done) done.style.display = 'block';
+    } else if (which === 'fail') {
+      if (done) done.style.display = 'none';
+      if (fail) fail.style.display = 'block';
+    }
+    form.style.display = 'none';
+  };
+
+  // Handler submit (bắt ở capture phase để “thắng” Webflow)
+  const onSubmit = (ev) => {
     ev.preventDefault();
+    ev.stopPropagation();
+    ev.stopImmediatePropagation();
 
     if (done) done.style.display = 'none';
     if (fail) fail.style.display = 'none';
-
-    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
-    const setBtn = (txt, dis) => {
-      if (!submitBtn) return;
-      submitBtn.disabled = !!dis;
-      if ('value' in submitBtn) {
-        submitBtn.dataset.orig = submitBtn.dataset.orig || submitBtn.value;
-        if (txt != null) submitBtn.value = txt;
-      } else {
-        submitBtn.dataset.orig = submitBtn.dataset.orig || submitBtn.textContent;
-        if (txt != null) submitBtn.textContent = txt;
-      }
-    };
     setBtn('Đang gửi...', true);
 
     const url = form.action;
     const fd  = new FormData(form);
 
+    // Timeout phòng khi Apps Script chậm/treo
+    const to = setTimeout(() => {
+      setBtn(submitBtn?.dataset.orig || 'Xác nhận', false);
+      showState('fail');
+    }, 10000);
+
     fetch(url, { method: 'POST', body: fd, mode: 'no-cors' })
       .then(() => {
-        if (done) done.style.display = 'block';
-        form.style.display = 'none';
+        clearTimeout(to);
+        try { form.reset(); } catch(_) {}
+        setBtn(submitBtn?.dataset.orig || 'Xác nhận', false);
+        showState('done');
       })
       .catch(() => {
-        if (fail) fail.style.display = 'block';
-      })
-      .finally(() => {
-        setBtn(submitBtn?.dataset.orig || 'Gửi', false);
+        clearTimeout(to);
+        setBtn(submitBtn?.dataset.orig || 'Xác nhận', false);
+        showState('fail');
       });
-  });
+
+    return false;
+  };
+
+  form.addEventListener('submit', onSubmit, { capture: true });
 })();
 </script>
 </body>
 </html>
+
