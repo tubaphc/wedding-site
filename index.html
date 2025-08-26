@@ -71,6 +71,15 @@
     font-weight:600;
   }
 </style>
+<style>
+  .w-form .w-form-done,
+  .w-form .w-form-fail{
+    background:#000 !important;
+    color:#fff !important;
+    padding:12px 16px;
+    border-radius:12px;
+  }
+</style>
 </head>
 <body>
     <div class="page-wrapper">
@@ -544,11 +553,13 @@
                                             <input class="button w-button" data-wait="Please wait..." style="-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" type="submit" value="Xác nhận" />
                                         </form>
                                         <div class="w-form-done">
-                                            <div>Thank you! Your submission has been received!</div>
+  <div>Cảm ơn bạn! Tụi mình đã nhận được phản hồi của bạn.</div>
+</div>
                                         </div>
 
                                         <div class="w-form-fail">
-                                            <div>Oops! Something went wrong while submitting the form.</div>
+  <div>Rất tiếc! Đã có lỗi khi gửi biểu mẫu. Vui lòng thử lại.</div>
+</div>
                                         </div>
                                     </div>
                                 </div>
