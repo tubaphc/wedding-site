@@ -95,6 +95,26 @@
                 opacity: 1 !important;
             }
     </style>
+    <style>
+        .div-block-26 .w-radio {
+            display: flex;
+            align-items: center;
+            padding-left: 0; /* bỏ khoảng lùi mặc định */
+        }
+
+        .div-block-26 .w-radio-input {
+            float: none; /* bỏ float mặc định */
+            margin: 0 1rem 0 0; /* khoảng cách giữa nút và chữ */
+            position: static; /* an toàn, tránh lệch */
+            transform-origin: left center;
+            /* nếu bạn đã gán scale trên class riêng thì giữ nguyên;
+     nếu chưa, có thể thêm ở đây: transform: scale(1.5); */
+        }
+
+        .div-block-26 .w-form-label {
+            display: inline; /* hoặc để nguyên; chủ yếu là bỏ float phía trên */
+        }
+    </style>
 </head>
 <body>
     <div class="page-wrapper">
