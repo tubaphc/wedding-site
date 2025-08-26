@@ -60,25 +60,13 @@
 
   </style>
 <style>
-  .w-form .w-form-done, .w-form .w-form-fail { display: none; }
-</style>
-<style>
-  .w-form .w-form-done,
-  .w-form .w-form-fail{
-    display:none;
-    padding:12px 16px;
-    border-radius:12px;
-    font-weight:600;
-  }
-</style>
-<style>
-  .video-shell{ position:relative; display:block; }
-  .video-shell video{ display:block; width:100%; height:auto; }
+  .video-shell{ position:relative; isolation:isolate; }
+  .video-shell video{ display:block; width:100%; height:auto; z-index:0; }
   .video-play-btn{
     position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
     padding:.7rem 1.1rem; border:0; border-radius:.75rem;
-    background:#111; color:#fff; font:600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:.92;
+    background:#111; color:#fff; font:600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:.92; z-index:1000; pointer-events:auto;
   }
   .video-play-btn[hidden]{ display:none; }
 </style>
@@ -552,7 +540,7 @@
                             <li>
                                 <div class="div-block-22">
                                     <div class="w-form">
-                                        <form action="https://script.google.com/macros/s/AKfycbwac9-UXYp5hA91dcjojT4HIeNj2YPIStiCRjw2TJd1N3t7T1D7h47yI-4eco0GQLb8/exec" class="form-2" data-name="RSVP Form" data-wf-element-id="0b2911b5-8fde-a94b-64f4-b05ac575e6da" data-wf-page-id="6878482e2444e1622802968d" id="wf-form-RSVP-Form" method="post" name="wf-form-RSVP-Form">
+                                        <form action="https://script.google.com/macros/s/AKfycbwac9-UXYp5hA91dcjojT4HIeNj2YPIStiCRjw2TJd1N3t7T1D7h47yI-4eco0GQLb8/exec" class="form-2" data-name="RSVP Form" data-redirect="/" data-wf-element-id="0b2911b5-8fde-a94b-64f4-b05ac575e6da" data-wf-page-id="6878482e2444e1622802968d" id="wf-form-RSVP-Form" method="post" name="wf-form-RSVP-Form" redirect="/">
                                             <label class="field-label-3" for="name">Tên</label><input class="text-field w-input" data-name="name" id="name" maxlength="256" name="name" placeholder="" required="" type="text" /><label class="field-label-4" for="guests">Số người đến tham dự</label><input class="w-input" data-name="guests" id="guests" maxlength="256" name="guests" placeholder="" type="text" /><label class="field-label-2" for="email">Chung vui cùng tụi mình chứ</label>
                                             <div class="div-block-26"><label class="radio-button-field-3 w-radio"><input class="w-form-formradioinput radio-button-3 w-radio-input" data-name="confirmed" id="Yes" name="confirmed" type="radio" value="Yes" /><span class="radio-button-label-3 w-form-label" for="Yes"><strong class="bold-text">CÓ</strong></span></label><label class="radio-button-field w-radio"><input class="w-form-formradioinput radio-button-2 w-radio-input" data-name="confirmed" id="No" name="confirmed" required="" type="radio" value="No" /><span class="radio-button-label-2 w-form-label" for="No">Không, mình sẽ gửi lời chúc phúc từ xa</span></label></div>
                                             <input class="button w-button" data-wait="Please wait..." style="-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" type="submit" value="Xác nhận" />
@@ -587,168 +575,61 @@
     <script src="js/webflow.0b798d3d.7c53ad578c703ad3.js" type="text/javascript"></script>
 <script>
 (() => {
-  const form = document.getElementById('wf-form-RSVP-Form');
-  if (!form) return;
-  const wrap = form.closest('.w-form') || form.parentElement;
-  const done = wrap ? wrap.querySelector('.w-form-done') : null;
-  const fail = wrap ? wrap.querySelector('.w-form-fail') : null;
-
-  if (done) done.style.display = 'none';
-  if (fail) fail.style.display = 'none';
-
-  form.removeAttribute('data-redirect');
-  form.removeAttribute('redirect');
-
-  form.addEventListener('submit', (ev) => {
-    ev.preventDefault();
-
-    if (done) done.style.display = 'none';
-    if (fail) fail.style.display = 'none';
-
-    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
-    const setBtn = (txt, dis) => {
-      if (!submitBtn) return;
-      submitBtn.disabled = !!dis;
-      if ('value' in submitBtn) {
-        submitBtn.dataset.orig = submitBtn.dataset.orig || submitBtn.value;
-        if (txt != null) submitBtn.value = txt;
-      } else {
-        submitBtn.dataset.orig = submitBtn.dataset.orig || submitBtn.textContent;
-        if (txt != null) submitBtn.textContent = txt;
-      }
-    };
-    setBtn('Đang gửi...', true);
-
-    const url = form.action;
-    const fd  = new FormData(form);
-
-    fetch(url, { method: 'POST', body: fd, mode: 'no-cors' })
-      .then(() => {
-        if (done) done.style.display = 'block';
-        form.style.display = 'none';
-      })
-      .catch(() => {
-        if (fail) fail.style.display = 'block';
-      })
-      .finally(() => {
-        setBtn(submitBtn?.dataset.orig || 'Gửi', false);
-      });
-  });
-})();
-</script>
-<script>
-(() => {
-  const form = document.getElementById('wf-form-RSVP-Form');
-  if (!form) return;
-  const wrap = form.closest('.w-form') || form.parentElement;
-  const done = wrap ? wrap.querySelector('.w-form-done') : null;
-  const fail = wrap ? wrap.querySelector('.w-form-fail') : null;
-  const btn  = form.querySelector('input[type="submit"],button[type="submit"], .w-button[type="submit"]') || form.querySelector('.w-button, [class*="button"]');
-
-  function rgbToHsl(r,g,b){
-    r/=255; g/=255; b/=255;
-    const max=Math.max(r,g,b), min=Math.min(r,g,b);
-    let h,s,l=(max+min)/2;
-    if(max===min){ h=s=0; }
-    else{
-      const d=max-min;
-      s=l>0.5? d/(2-max-min): d/(max+min);
-      switch(max){
-        case r: h=(g-b)/d+(g<b?6:0); break;
-        case g: h=(b-r)/d+2; break;
-        case b: h=(r-g)/d+4; break;
-      }
-      h*=60;
-    }
-    return [Math.round(h), Math.round(s*100), Math.round(l*100)];
-  }
-
-  function parseRGB(str){
-    const m = String(str).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
-    if (!m) return null;
-    return [parseInt(m[1],10), parseInt(m[2],10), parseInt(m[3],10)];
-  }
-
-  let btnBg = '#16a34a';
-  if (btn) {
-    const cs = getComputedStyle(btn);
-    btnBg = cs.backgroundColor || btnBg;
-  }
-
-  if (done) {
-    done.style.backgroundColor = btnBg;
-    done.style.color = '#fff';
-  }
-
-  let red = '#fecaca';
-  const rgb = parseRGB(btnBg);
-  if (rgb) {
-    const [h,s,l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
-    const light = Math.min(l + 20, 92);
-    red = `hsl(0deg ${s}% ${light}%)`;
-  }
-  if (fail) {
-    fail.style.backgroundColor = red;
-    fail.style.color = '#7f1d1d';
-  }
-})();
-</script>
-<script>
-(() => {
-  const v   = document.getElementById('34352df9-6e8a-650b-b277-5554ff4f6cc1-video');
-  const btn = document.getElementById('videoPlayBtn');
+  const v = document.getElementById('34352df9-6e8a-650b-b277-5554ff4f6cc1-video') || document.querySelector('.video-shell video');
+  const btn = document.getElementById('videoPlayBtn') || document.querySelector('.video-play-btn');
   if (!v || !btn) return;
 
-  // Ensure desired attributes
-  v.autoplay = true;         // try to autoplay
-  v.loop = false;            // no loop
-  v.removeAttribute('loop'); // remove if present in markup
-  v.muted = false;           // we want sound on first play if allowed
+  // Desired behavior
+  v.autoplay = true;            // try to autoplay
+  v.loop = false;               // no loop
+  v.removeAttribute('loop');    // ensure removed from markup
+  v.muted = false;              // want sound on first play if allowed
   v.playsInline = true;
   v.setAttribute('playsinline','');
   v.setAttribute('webkit-playsinline','');
   v.preload = 'auto';
-  
-  // Hide button once actually playing
-  const hideBtn = () => btn.hidden = true;
-  const showBtn = (label) => { btn.textContent = label || '▶ Play'; btn.hidden = false; };
 
-  // When video ends once, show replay button
+  const hideBtn = () => { btn.hidden = true; applyPE(); };
+  const showBtn = (label) => { if (label) btn.textContent = label; btn.hidden = false; applyPE(); };
+
+  // Make sure button receives click when visible
+  const applyPE = () => { v.style.pointerEvents = btn.hidden ? 'auto' : 'none'; };
+  applyPE();
+
+  // Show replay button when ended
   v.addEventListener('ended', () => {
-    // Reset to beginning (optional; user can replay from start)
     v.currentTime = 0;
     showBtn('▶ Play again');
   });
 
-  // Button click: play with sound
+  // Button click plays with sound
   btn.addEventListener('click', async () => {
     try {
       v.muted = false;
       await v.play();
       hideBtn();
-    } catch(e) {
-      // If still blocked, hint user
-      btn.textContent = 'Tap to play (sound)';
+    } catch (e) {
+      // Some browsers still require user gesture—button click is a gesture, so retry
+      // If it still fails, keep the button visible
+      btn.textContent = '▶ Play';
     }
   });
 
   // Try autoplay with sound on load
   const tryAuto = async () => {
     try {
-      await v.play();        // attempt unmuted autoplay
+      await v.play();  // unmuted attempt
       hideBtn();
-    } catch(e) {
-      // Autoplay with sound is blocked => do NOT autoplay muted;
-      // just show the Play button to require user gesture
+    } catch (e) {
+      // Blocked → don't autoplay muted; show Play button for user to start with sound
       showBtn('▶ Play');
     }
   };
 
-  // If metadata already available, try immediately; otherwise wait
   if (v.readyState >= 2) tryAuto();
   else v.addEventListener('loadedmetadata', tryAuto, { once:true });
 
-  // Also hide button any time playback starts (e.g., from browser UI)
+  // Also hide button if playback starts from any other control
   v.addEventListener('play', hideBtn);
 })();
 </script>
