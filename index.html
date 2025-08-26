@@ -1,109 +1,536 @@
 <!DOCTYPE html>
 <html data-wf-domain="ba-phuocs-radical-site.webflow.io" data-wf-page="6878482e2444e1622802968d" data-wf-site="6878482e2444e16228029656" data-wf-status="1">
 <head>
-    <meta charset="utf-8" />
-    <title>Phuoc & Tram Anh</title>
-    <meta content="Phuoc & Tram Anh" property="og:title" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="Webflow" name="generator" />
-    <link href="css/site.webflow.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect" />
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-    <script type="text/javascript">WebFont.load({ google: { families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic", "Inconsolata:400,700", "Great Vibes:400", "Oswald:200,300,400,500,600,700"] } });</script>
-    <script type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
-    <link href="images/hearth_icon.png" rel="shortcut icon" type="image/x-icon" />
-    <link href="images/hearth_icon.png" rel="apple-touch-icon" />
-    <style>
-        /* --- Font Smoothing --- */
+  <meta charset="utf-8" />
+  <title>Phuoc & Tram Anh</title>
+  <meta content="Phuoc & Tram Anh" property="og:title" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="Webflow" name="generator" />
 
-        body {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
-        }
-    </style>
-    <style>
-        .w-webflow-badge {
-            position: fixed !important;
-            display: None !important;
-            visibility: hidden !important;
-        }
-    </style>
-    <style>
-        .map-embed {
-            margin-top: 1rem;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            border-radius: 16px;
-            overflow: hidden;
-        }
+  <link href="css/site.webflow.css" rel="stylesheet" />
 
-            .map-embed iframe {
-                width: min(900px,100%);
-                height: 450px;
-                border: 0;
-            }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect" />
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    WebFont.load({
+      google: {
+        families: [
+          "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
+          "Inconsolata:400,700", "Great Vibes:400", "Oswald:200,300,400,500,600,700"
+        ]
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    !function (o, c) {
+      var n = c.documentElement, t = " w-mod-";
+      n.className += t + "js",
+      ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) &&
+      (n.className += t + "touch")
+    }(window, document);
+  </script>
 
-        .map-rounded {
-        }
+  <link href="images/hearth_icon.png" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/hearth_icon.png" rel="apple-touch-icon" />
 
-        @media (max-width: 767.98px) {
-            .map-embed iframe {
-                width: 80vw;
-                aspect-ratio: 3/2;
-                height: auto;
-            }
-        }
-    </style> </style>
-    <style>
-        .video-shell {
-            position: relative;
-            isolation: isolate;
-        }
+  <!-- Preload videos -->
+  <link rel="preload" as="video" href="videos/SaveTheDate.mp4" type="video/mp4" fetchpriority="high">
+  <link rel="preload" as="video" href="videos/SaveTheDate.webm" type="video/webm" fetchpriority="high">
 
-            .video-shell video {
-                display: block;
-                width: 100%;
-                height: auto;
-                z-index: 0;
-            }
+  <style>
+    /* --- Font Smoothing --- */
+    body { -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; }
+  </style>
 
-        .video-play-btn {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            padding: .7rem 1.1rem;
-            border: 0;
-            border-radius: .75rem;
-            background: #111;
-            color: #fff;
-            font: 600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,Arial;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,.25);
-            opacity: .92;
-            z-index: 1000;
-            pointer-events: auto;
-        }
+  <style>
+    .w-webflow-badge { position: fixed !important; display: none !important; visibility: hidden !important; }
+  </style>
 
-            .video-play-btn[hidden] {
-                display: none;
-            }
-    </style>
+  <style>
+    .map-embed {
+      margin-top: 1rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .map-embed iframe {
+      width: min(900px,100%);
+      height: 450px;
+      border: 0;
+    }
+    @media (max-width: 767.98px) {
+      .map-embed iframe {
+        width: 80vw;
+        aspect-ratio: 3/2;
+        height: auto;
+      }
+    }
+  </style>
+
+  <style>
+    /* Video shell & fixes */
+    .video-shell { position:relative; isolation:isolate; }
+    .video-shell video{ display:block; width:100%; height:auto; z-index:0; }
+    .w-background-video, .w-background-video-atom { pointer-events: auto !important; }
+    .video_bg_overlay { pointer-events: none !important; }
+    .video_box { transform: none !important; opacity: 1 !important; }
+    /* Form messages in Vietnamese (black background) */
+    .w-form .w-form-done, .w-form .w-form-fail {
+      background:#000; color:#fff; padding:12px 16px; border-radius:12px; display:none;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="page-wrapper"> 
-    <main class="main-wrapper"> 
-        <section class="section is-video">
+  <div class="page-wrapper">
+    <main class="main-wrapper">
+      <section class="section is-video">
         <div class="container-large">
-            <div class="flex-center">
-            <div class="max-width-700"><
-                h1 class="heading-style-h1">save the date<br />04 . 10 . 2025</h1></div> </div> </div> <div class="video_wall"> <div class="video_section"> <div class="video_wrap"> <div class="video_box" data-w-id="805de4e7-667f-95f8-2868-3a3b4fbdd528" style="-webkit-transform:translate3d(0, 15%, 0) scale3d(3, 3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 15%, 0) scale3d(3, 3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 15%, 0) scale3d(3, 3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 15%, 0) scale3d(3, 3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"> <div class="video_bg"> <div class="video_bg_overlay"></div> <div class="video_bg w-background-video w-background-video-atom" data-autoplay="true" data-loop="true" data-poster-url="images/hero-poster.jpg" data-video-urls="videos/SaveTheDate.mp4,videos/SaveTheDate.webm" data-wf-ignore="true"> <div class="video-shell"> <video id="34352df9-6e8a-650b-b277-5554ff4f6cc1-video" autoplay loop muted playsinline data-object-fit="cover" data-wf-ignore="true" style='background-image:url("/images/hero-poster.jpg")'> <source src="videos/SaveTheDate.mp4" type="video/mp4" data-wf-ignore="true" /> <source src="videos/SaveTheDate.webm" type="video/webm" data-wf-ignore="true" /> </video> <button id="videoPlayBtn" class="video-play-btn" type="button" aria-label="Play video">▶ Play</button> </div> </div> </div> </div> </div> </div> </div> </section> <section class="section background-color-black"> <div class="w-layout-blockcontainer container-3 w-container"> <ul class="list" role="list"> <li> <div class="w-layout-blockcontainer container-2 w-container"> <div class="div-block"> <div class="wrap_flex is-align-top" data-w-id="f34fdec2-7330-0cd6-5ea1-badf54d8c9e2"> <div class="max-width-440-copy"><h2 class="heading-style-h2-copy">Mời bạn tới <br />ngày vui!</h2></div> <div class="div-block-12">Tụi mình sắp về chung một nhà rồi đây! Ngày trọng đại của tụi mình sẽ thiếu đi niềm vui nếu vắng bạn. Rất mong bạn sẽ đến chung vui, để ngày khởi đầu hành trình hạnh phúc của tụi mình thêm rộn ràng. Khi cùng nhau bước vào chặng đường tươi đẹp này, tình yêu và sự hiện diện của bạn chính là niềm vui to bự nhất.</div> </div> </div> </div> </li> <li> <div class="w-layout-blockcontainer container w-container"> <div><h2 class="heading-2">Tháng 10</h2></div> <ul class="list-2" role="list"> <li> <div class="div-block-2"> <div class="text-block-3">T2</div> </div> </li> <li> <div> <div class="text-block-4">T3</div> </div> </li> <li> <div> <div class="text-block-5">T4</div> </div> </li> <li> <div> <div class="text-block-6">T5</div> </div> </li> <li> <div> <div class="text-block-7">T6</div> </div> </li> <li> <div> <div class="text-block-8">T7</div> </div> </li> <li> <div> <div class="text-block-9">CN</div> </div> </li> <li> <div class="div-block-3"> <div class="text-block"></div> </div> </li> <li> <div> <div class="text-block-2"></div> </div> </li> <li> <div> <div class="text-block-10">1</div> </div> </li> <li> <div> <div class="text-block-11">2</div> </div> </li> <li> <div> <div class="text-block-12">3</div> </div> </li> <li class="list-item"> <div class="div-block-4"> <img alt="" class="image" loading="lazy" src="images/hearth_icon.png" width="129" /> <div class="text-block-14">4</div> </div> </li> <li> <div> <div class="text-block-13">5<br /></div> </div> </li> <li> <div> <div class="text-block-15">6</div> </div> </li> <li> <div> <div class="text-block-16">8<br /></div> </div> </li> <li> <div> <div class="text-block-17">9</div> </div> </li> <li> <div> <div class="text-block-19">10</div> </div> </li> <li> <div> <div class="text-block-18">11</div> </div> </li> <li> <div> <div class="text-block-21">12</div> </div> </li> <li> <div> <div class="text-block-20">13</div> </div> </li> <li> <div> <div class="text-block-22">14</div> </div> </li> <li> <div> <div class="text-block-23">15</div> </div> </li> <li> <div> <div class="text-block-24">16</div> </div> </li> <li> <div> <div class="text-block-25">17</div> </div> </li> <li> <div> <div class="text-block-26">18</div> </div> </li> <li> <div> <div class="text-block-27">19</div> </div> </li> <li> <div> <div class="text-block-28">20</div> </div> </li> <li> <div> <div class="text-block-29">21</div> </div> </li> <li> <div> <div class="text-block-30">22</div> </div> </li> <li> <div> <div class="text-block-31">23</div> </div> </li> <li> <div> <div class="text-block-32">24</div> </div> </li> <li> <div> <div class="text-block-33">25</div> </div> </li> <li> <div> <div class="text-block-34">26</div> </div> </li> <li> <div> <div class="text-block-35">27</div> </div> </li> <li> <div> <div class="text-block-36">28</div> </div> </li> <li> <div> <div class="text-block-37">29</div> </div> </li> <li> <div> <div class="text-block-38">30</div> </div> </li> <li> <div> <div class="text-block-39">31</div> </div> </li> </ul> </div> </li> </ul> </div> </section> <section class="section background-color-white" id="intro"> <div class="image-wall" data-w-id="730ac100-4982-dcb2-e0bf-69c50ab86727"> <div class="p-a_image_section"> <div class="image_wrap"> <div class="image-box"> <img alt="" loading="lazy" src="images/ngoi_nhin_nhau.jpg" /> </div> <div class="div-block-25"> <div class="phuoc-text">TỤI MÌNH CƯỚI RỒI NÈ !</div> </div> </div> </div> </div> </section> <section class="section-3"> <div class="div-block-7"> <div><h1 class="heading">Địa Chỉ</h1></div> <div class="div-block-13-copy"> <div class="text-block-45">Hôn lễ được diễn ra tại khu vườn xinh đẹp, tràn ngập hoa và nắng ở Tây Ninh</div> </div> <div class="link-block"><a class="link-2" href="https://maps.app.goo.gl/e2X9scGiZ886ftQx9">Vườn dừa nhà ngoại</a></div> <div class="map-embed"> <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m8!1m3!1d489.0912603733998!2d106.116682!3d11.281241000000001!3m2!1i1024!2i768!4f13.1!4m6!3e6!4m0!4m3!3m2!1d11.281265331063556!2d106.11672893865638!5e0!3m2!1sen!2sus!4v1756197786477!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div> </section> <section class="section-3"> <div class="div-block-7"> <div><h1 class="heading">Dress code</h1></div> <div class="div-block-13-copy"> <div class="text-block-45">Để bữa tiệc thêm ngọt ngào, bạn có thể  chọn cho mình một bộ trang phục tone màu pastel nhẹ nhàng nhé.</div> </div> <img alt="" class="image-7" loading="lazy" src="images/pastel_color.jpg" /> </div> </section> <section class="section-2"> <div class="div-block-timeline"> <div class="timeline_wall" data-w-id="b0b5a403-6e8f-cc9e-e8c6-763b0e36c87d"> <div class="timeline_section"> <h1 class="heading">Timeline</h1> <div> <ul class="list-4" role="list"> <li class="list-item-2" id="w-node-_306c7656-880d-7a4a-8f97-2395672b48de-2802968d"> <div class="timeline-left-entry-1"> <div class="div-block-15"> <div class="div-block-14"> <div class="text-block-46">16:00 - 16:30</div> <div class="timeline-left-content">Đón khách</div> </div> </div> <div class="div-block-16"> <div class="div-block-17"> <img alt="" class="image-6" loading="lazy" src="images/welcome.png" width="80" /> </div> </div> </div> <div class="timeline-left-entry-2"> <div class="div-block-15"> <div class="div-block-14"> <div class="text-block-46">17:30 - 18:30</div> <div class="timeline-left-content"> Teabreak và chụp hình</div> </div> </div> <div class="div-block-16"> <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/Photo.png" width="63" /></div> </div> </div> <div class="timeline-left-entry-3"> <div class="div-block-15"> <div class="div-block-14"> <div class="text-block-46">18:45 - 19:30</div> <div class="timeline-left-content">Ăn tiệc</div> </div> </div> <div class="div-block-16"> <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/Dinner.png" width="63" /></div> </div> </div> <div class="timeline-left-entry-4"> <div class="div-block-15"> <div class="div-block-14"> <div class="text-block-46">20:30<br /></div> <div class="timeline-left-content">Kết thúc tiệc</div> </div> </div> <div class="div-block-16"> <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/End.png" width="63" /></div> </div> </div> </li> <li class="list-item-3" id="w-node-_991c7646-c1cd-46f8-ea0d-af14a9586860-2802968d"> <div class="div-block-10"> <img alt="" class="image-5" loading="lazy" sizes="(max-width: 479px) 84vw, 299px" src="images/End.png" width="299" /> </div> </li> <li class="list-item-4" id="w-node-ba721779-e9e3-edf4-a3f1-2462072a6ff4-2802968d"> <div class="timeline-right-entry-1"> <div class="div-block-16"> <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/Vow.png" width="63" /></div> </div> <div class="div-block-15"> <div class="div-block-14"> <div class="timeline_right_time">16:30 - 17:30</div> <div class="timeline-right-content">Vow</div> </div> </div> </div> <div class="timeline-right-entry--2"> <div class="div-block-16"> <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/entrance.png" width="63" /></div> </div> <div class="div-block-15"> <div class="div-block-14"> <div class="timeline_right_time">18:30 - 18:45</div> <div class="timeline-right-content">Làm lễ</div> </div> </div> </div> <div class="timeline-right-entry-3"> <div class="div-block-16"> <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/Game.png" width="63" /></div> </div> <div class="div-block-15"> <div class="div-block-14"> <div class="timeline_right_time">19:30 - 20:30</div> <div class="timeline-right-content">Chơi game<br />với dâu rể</div> </div> </div> </div> </li> </ul> </div> </div> </div> </div> </section> <section class="section is-bottom-cta" data-w-id="d2dd1eb0-1875-d9f4-4f91-beb9d79f8276"> <div class="container-large-copy-copy"> <div class="bottom-cta_wrap-copy" data-w-id="1aec040d-57ee-c683-692f-e474fc934555"> <div class="image_wrap"> <div class="image-box"> <img alt="" class="image-3" loading="lazy" src="images/Look.jpg" width="1637" /> </div> </div> <div class="div-block-21"> <div class="div-block-20">WE LOOK</div> <div class="div-block-20">FORWARD</div> <div class="div-block-20">TO SEE YOU</div> </div> </div> </div> </section> <section class="section background-color-black"> <div class="div-block-24"> <div class="faqs_wrap" data-w-id="39c41625-96bb-d3d0-8826-2fcb008cc178"> <div class="w-layout-vflex flex-block"> <div class="margin-bottom-16"><h2 class="is-word is-1" style="opacity:0;-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)">Xác nhận <br />tham dự</h2></div> <div class="text-color-lightgrey-copy"><p class="text-size-medium" style="-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">Bạn có tới chung vui không? <br />Nói <strong>CÓ</strong> thiệt to nha, để tụi mình chuẩn bị thật chỉnh chu đón bạn</p></div> </div> <ul class="faqs_list" role="list" style="opacity:0;-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"> <li> <div class="div-block-22"> <div class="w-form"> <form action="https://script.google.com/macros/s/AKfycbwac9-UXYp5hA91dcjojT4HIeNj2YPIStiCRjw2TJd1N3t7T1D7h47yI-4eco0GQLb8/exec" class="form-2" data-name="RSVP Form" data-redirect="/" data-wf-element-id="0b2911b5-8fde-a94b-64f4-b05ac575e6da" data-wf-page-id="6878482e2444e1622802968d" id="wf-form-RSVP-Form" method="post" name="wf-form-RSVP-Form" redirect="/"> <label class="field-label-3" for="name">Tên</label><input class="text-field w-input" data-name="name" id="name" maxlength="256" name="name" placeholder="" required="" type="text" /><label class="field-label-4" for="guests">Số người đến tham dự</label><input class="w-input" data-name="guests" id="guests" maxlength="256" name="guests" placeholder="" type="text" /><label class="field-label-2" for="email">Chung vui cùng tụi mình chứ</label> <div class="div-block-26"><label class="radio-button-field-3 w-radio"><input class="w-form-formradioinput radio-button-3 w-radio-input" data-name="confirmed" id="Yes" name="confirmed" type="radio" value="Yes" /><span class="radio-button-label-3 w-form-label" for="Yes"><strong class="bold-text">CÓ</strong></span></label><label class="radio-button-field w-radio"><input class="w-form-formradioinput radio-button-2 w-radio-input" data-name="confirmed" id="No" name="confirmed" required="" type="radio" value="No" /><span class="radio-button-label-2 w-form-label" for="No">Không, mình sẽ gửi lời chúc phúc từ xa</span></label></div> <input class="button w-button" data-wait="Please wait..." style="-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" type="submit" value="Xác nhận" /> </form> <div class="w-form-done"> <div>Thank you! Your submission has been received!</div> </div> <div class="w-form-fail"> <div>Oops! Something went wrong while submitting the form.</div> </div> </div> </div> </li> </ul> </div> </div> </section> <footer class="section is-footer"> <div class="container-large-copy"> <div class="margin-bottom-64"> <div class="wrap_flex is-align-top"><p class="heading-style-h5-copy">Cảm ơn bạn nhé </p></div> </div> </div> </footer> </main> </div>
-    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="js/webflow.schunk.36b8fb49256177c8.js" type="text/javascript"></script>
-    <script src="js/webflow.schunk.51a4289a6e5774e8.js" type="text/javascript"></script>
-    <script src="js/webflow.0b798d3d.7c53ad578c703ad3.js" type="text/javascript"></script>
-    <script>(() => { const v = document.getElementById('34352df9-6e8a-650b-b277-5554ff4f6cc1-video') || document.querySelector('.video-shell video'); const btn = document.getElementById('videoPlayBtn') || document.querySelector('.video-play-btn'); if (!v || !btn) return; // Desired behavior v.autoplay = true; // try to autoplay v.loop = false; // no loop v.removeAttribute('loop'); // ensure removed from markup v.muted = false; // want sound on first play if allowed v.playsInline = true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline',''); v.preload = 'auto'; const hideBtn = () => { btn.hidden = true; applyPE(); }; const showBtn = (label) => { if (label) btn.textContent = label; btn.hidden = false; applyPE(); }; // Make sure button receives click when visible const applyPE = () => { v.style.pointerEvents = btn.hidden ? 'auto' : 'none'; }; applyPE(); // Show replay button when ended v.addEventListener('ended', () => { v.currentTime = 0; showBtn('▶ Play again'); }); // Button click plays with sound btn.addEventListener('click', async () => { try { v.muted = false; await v.play(); hideBtn(); } catch (e) { // Some browsers still require user gesture—button click is a gesture, so retry // If it still fails, keep the button visible btn.textContent = '▶ Play'; } }); // Try autoplay with sound on load const tryAuto = async () => { try { await v.play(); // unmuted attempt hideBtn(); } catch (e) { // Blocked → don't autoplay muted; show Play button for user to start with sound showBtn('▶ Play'); } }; if (v.readyState >= 2) tryAuto(); else v.addEventListener('loadedmetadata', tryAuto, { once:true }); // Also hide button if playback starts from any other control v.addEventListener('play', hideBtn); })();</script>
+          <div class="flex-center">
+            <div class="max-width-700">
+              <h1 class="heading-style-h1">save the date<br />04 . 10 . 2025</h1>
+            </div>
+          </div>
+        </div>
+
+        <div class="video_wall">
+          <div class="video_section">
+            <div class="video_wrap">
+              <div class="video_box" data-w-id="805de4e7-667f-95f8-2868-3a3b4fbdd528">
+                <div class="video_bg">
+                  <div class="video_bg_overlay"></div>
+                  <div class="video_bg w-background-video w-background-video-atom"
+                       data-autoplay="true"
+                       data-loop="true"
+                       data-poster-url="images/hero-poster.jpg"
+                       data-video-urls="videos/SaveTheDate.mp4,videos/SaveTheDate.webm"
+                       data-wf-ignore="true">
+
+                    <div class="video-shell">
+                      <video id="34352df9-6e8a-650b-b277-5554ff4f6cc1-video"
+                             playsinline
+                             data-object-fit="cover"
+                             data-wf-ignore="true"
+                             style='background-image:url("images/hero-poster.jpg")'>
+                        <source src="videos/SaveTheDate.mp4" type="video/mp4" data-wf-ignore="true" />
+                        <source src="videos/SaveTheDate.webm" type="video/webm" data-wf-ignore="true" />
+                      </video>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section background-color-black">
+        <div class="w-layout-blockcontainer container-3 w-container">
+          <ul class="list" role="list">
+            <li>
+              <div class="w-layout-blockcontainer container-2 w-container">
+                <div class="div-block">
+                  <div class="wrap_flex is-align-top" data-w-id="f34fdec2-7330-0cd6-5ea1-badf54d8c9e2">
+                    <div class="max-width-440-copy">
+                      <h2 class="heading-style-h2-copy">Mời bạn tới <br />ngày vui!</h2>
+                    </div>
+                    <div class="div-block-12">
+                      Tụi mình sắp về chung một nhà rồi đây! Ngày trọng đại của tụi mình sẽ thiếu đi niềm vui nếu vắng bạn.
+                      Rất mong bạn sẽ đến chung vui, để ngày khởi đầu hành trình hạnh phúc của tụi mình thêm rộn ràng.
+                      Khi cùng nhau bước vào chặng đường tươi đẹp này, tình yêu và sự hiện diện của bạn chính là niềm vui to bự nhất.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="w-layout-blockcontainer container w-container">
+                <div><h2 class="heading-2">Tháng 10</h2></div>
+                <ul class="list-2" role="list">
+                  <li><div class="div-block-2"><div class="text-block-3">T2</div></div></li>
+                  <li><div><div class="text-block-4">T3</div></div></li>
+                  <li><div><div class="text-block-5">T4</div></div></li>
+                  <li><div><div class="text-block-6">T5</div></div></li>
+                  <li><div><div class="text-block-7">T6</div></div></li>
+                  <li><div><div class="text-block-8">T7</div></div></li>
+                  <li><div><div class="text-block-9">CN</div></div></li>
+                  <li><div class="div-block-3"><div class="text-block"></div></div></li>
+                  <li><div><div class="text-block-2"></div></div></li>
+                  <li><div><div class="text-block-10">1</div></div></li>
+                  <li><div><div class="text-block-11">2</div></div></li>
+                  <li><div><div class="text-block-12">3</div></div></li>
+                  <li class="list-item">
+                    <div class="div-block-4">
+                      <img alt="" class="image" loading="lazy" src="images/hearth_icon.png" width="129" />
+                      <div class="text-block-14">4</div>
+                    </div>
+                  </li>
+                  <li><div><div class="text-block-13">5<br /></div></div></li>
+                  <li><div><div class="text-block-15">6</div></div></li>
+                  <li><div><div class="text-block-16">8<br /></div></div></li>
+                  <li><div><div class="text-block-17">9</div></div></li>
+                  <li><div><div class="text-block-19">10</div></div></li>
+                  <li><div><div class="text-block-18">11</div></div></li>
+                  <li><div><div class="text-block-21">12</div></div></li>
+                  <li><div><div class="text-block-20">13</div></div></li>
+                  <li><div><div class="text-block-22">14</div></div></li>
+                  <li><div><div class="text-block-23">15</div></div></li>
+                  <li><div><div class="text-block-24">16</div></div></li>
+                  <li><div><div class="text-block-25">17</div></div></li>
+                  <li><div><div class="text-block-26">18</div></div></li>
+                  <li><div><div class="text-block-27">19</div></div></li>
+                  <li><div><div class="text-block-28">20</div></div></li>
+                  <li><div><div class="text-block-29">21</div></div></li>
+                  <li><div><div class="text-block-30">22</div></div></li>
+                  <li><div><div class="text-block-31">23</div></div></li>
+                  <li><div><div class="text-block-32">24</div></div></li>
+                  <li><div><div class="text-block-33">25</div></div></li>
+                  <li><div><div class="text-block-34">26</div></div></li>
+                  <li><div><div class="text-block-35">27</div></div></li>
+                  <li><div><div class="text-block-36">28</div></div></li>
+                  <li><div><div class="text-block-37">29</div></div></li>
+                  <li><div><div class="text-block-38">30</div></div></li>
+                  <li><div><div class="text-block-39">31</div></div></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section background-color-white" id="intro">
+        <div class="image-wall" data-w-id="730ac100-4982-dcb2-e0bf-69c50ab86727">
+          <div class="p-a_image_section">
+            <div class="image_wrap">
+              <div class="image-box">
+                <img alt="" loading="lazy" src="images/ngoi_nhin_nhau.jpg" />
+              </div>
+              <div class="div-block-25">
+                <div class="phuoc-text">TỤI MÌNH CƯỚI RỒI NÈ !</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-3">
+        <div class="div-block-7">
+          <div><h1 class="heading">Địa Chỉ</h1></div>
+          <div class="div-block-13-copy">
+            <div class="text-block-45">Hôn lễ được diễn ra tại khu vườn xinh đẹp, tràn ngập hoa và nắng ở Tây Ninh</div>
+          </div>
+          <div class="link-block"><a class="link-2" href="https://maps.app.goo.gl/e2X9scGiZ886ftQx9">Vườn dừa nhà ngoại</a></div>
+          <div class="map-embed">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m8!1m3!1d489.0912603733998!2d106.116682!3d11.281241000000001!3m2!1i1024!2i768!4f13.1!4m6!3e6!4m0!4m3!3m2!1d11.281265331063556!2d106.11672893865638!5e0!3m2!1sen!2sus!4v1756197786477!5m2!1sen!2sus"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-3">
+        <div class="div-block-7">
+          <div><h1 class="heading">Dress code</h1></div>
+          <div class="div-block-13-copy">
+            <div class="text-block-45">
+              Để bữa tiệc thêm ngọt ngào, bạn có thể  chọn cho mình một bộ trang phục tone màu pastel nhẹ nhàng nhé.
+            </div>
+          </div>
+          <img alt="" class="image-7" loading="lazy" src="images/pastel_color.jpg" />
+        </div>
+      </section>
+
+      <section class="section-2">
+        <div class="div-block-timeline">
+          <div class="timeline_wall" data-w-id="b0b5a403-6e8f-cc9e-e8c6-763b0e36c87d">
+            <div class="timeline_section">
+              <h1 class="heading">Timeline</h1>
+              <div>
+                <ul class="list-4" role="list">
+                  <li class="list-item-2" id="w-node-_306c7656-880d-7a4a-8f97-2395672b48de-2802968d">
+                    <div class="timeline-left-entry-1">
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="text-block-46">16:00 - 16:30</div>
+                          <div class="timeline-left-content">Đón khách</div>
+                        </div>
+                      </div>
+                      <div class="div-block-16">
+                        <div class="div-block-17">
+                          <img alt="" class="image-6" loading="lazy" src="images/welcome.png" width="80" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-left-entry-2">
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="text-block-46">17:30 - 18:30</div>
+                          <div class="timeline-left-content">Teabreak và chụp hình</div>
+                        </div>
+                      </div>
+                      <div class="div-block-16">
+                        <div class="div-block-17">
+                          <img alt="" class="image-6" loading="lazy" src="images/Photo.png" width="63" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-left-entry-3">
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="text-block-46">18:45 - 19:30</div>
+                          <div class="timeline-left-content">Ăn tiệc</div>
+                        </div>
+                      </div>
+                      <div class="div-block-16">
+                        <div class="div-block-17">
+                          <img alt="" class="image-6" loading="lazy" src="images/Dinner.png" width="63" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-left-entry-4">
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="text-block-46">20:30</div>
+                          <div class="timeline-left-content">Kết thúc tiệc</div>
+                        </div>
+                      </div>
+                      <div class="div-block-16">
+                        <div class="div-block-17">
+                          <img alt="" class="image-6" loading="lazy" src="images/End.png" width="63" />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-item-3" id="w-node-_991c7646-c1cd-46f8-ea0d-af14a9586860-2802968d">
+                    <div class="div-block-10">
+                      <img alt="" class="image-5" loading="lazy" sizes="(max-width: 479px) 84vw, 299px" src="images/End.png" width="299" />
+                    </div>
+                  </li>
+
+                  <li class="list-item-4" id="w-node-ba721779-e9e3-edf4-a3f1-2462072a6ff4-2802968d">
+                    <div class="timeline-right-entry-1">
+                      <div class="div-block-16">
+                        <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/Vow.png" width="63" /></div>
+                      </div>
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="timeline_right_time">16:30 - 17:30</div>
+                          <div class="timeline-right-content">Vow</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-right-entry--2">
+                      <div class="div-block-16">
+                        <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/entrance.png" width="63" /></div>
+                      </div>
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="timeline_right_time">18:30 - 18:45</div>
+                          <div class="timeline-right-content">Làm lễ</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-right-entry-3">
+                      <div class="div-block-16">
+                        <div class="div-block-17"><img alt="" class="image-6" loading="lazy" src="images/Game.png" width="63" /></div>
+                      </div>
+                      <div class="div-block-15">
+                        <div class="div-block-14">
+                          <div class="timeline_right_time">19:30 - 20:30</div>
+                          <div class="timeline-right-content">Chơi game<br />với dâu rể</div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-bottom-cta" data-w-id="d2dd1eb0-1875-d9f4-4f91-beb9d79f8276">
+        <div class="container-large-copy-copy">
+          <div class="bottom-cta_wrap-copy" data-w-id="1aec040d-57ee-c683-692f-e474fc934555">
+            <div class="image_wrap">
+              <div class="image-box">
+                <img alt="" class="image-3" loading="lazy" src="images/Look.jpg" width="1637" />
+              </div>
+            </div>
+
+            <div class="div-block-21">
+              <div class="div-block-20">WE LOOK</div>
+              <div class="div-block-20">FORWARD</div>
+              <div class="div-block-20">TO SEE YOU</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section background-color-black">
+        <div class="div-block-24">
+          <div class="faqs_wrap" data-w-id="39c41625-96bb-d3d0-8826-2fcb008cc178">
+            <div class="w-layout-vflex flex-block">
+              <div class="margin-bottom-16">
+                <h2 class="is-word is-1">Xác nhận <br />tham dự</h2>
+              </div>
+              <div class="text-color-lightgrey-copy">
+                <p class="text-size-medium">
+                  Bạn có tới chung vui không? <br />
+                  Nói <strong>CÓ</strong> thiệt to nha, để tụi mình chuẩn bị thật chỉnh chu đón bạn
+                </p>
+              </div>
+            </div>
+            <ul class="faqs_list" role="list">
+              <li>
+                <div class="div-block-22">
+                  <div class="w-form">
+                    <form action="https://script.google.com/macros/s/AKfycbwac9-UXYp5hA91dcjojT4HIeNj2YPIStiCRjw2TJd1N3t7T1D7h47yI-4eco0GQLb8/exec"
+                          class="form-2"
+                          data-name="RSVP Form"
+                          data-redirect="/"
+                          data-wf-element-id="0b2911b5-8fde-a94b-64f4-b05ac575e6da"
+                          data-wf-page-id="6878482e2444e1622802968d"
+                          id="wf-form-RSVP-Form"
+                          method="post"
+                          name="wf-form-RSVP-Form"
+                          redirect="/">
+                      <label class="field-label-3" for="name">Tên</label>
+                      <input class="text-field w-input" data-name="name" id="name" maxlength="256" name="name" required type="text" />
+                      <label class="field-label-4" for="guests">Số người đến tham dự</label>
+                      <input class="w-input" data-name="guests" id="guests" maxlength="256" name="guests" type="text" />
+                      <label class="field-label-2" for="email">Chung vui cùng tụi mình chứ</label>
+                      <div class="div-block-26">
+                        <label class="radio-button-field-3 w-radio">
+                          <input class="w-form-formradioinput radio-button-3 w-radio-input" data-name="confirmed" id="Yes" name="confirmed" type="radio" value="Yes" />
+                          <span class="radio-button-label-3 w-form-label" for="Yes"><strong class="bold-text">CÓ</strong></span>
+                        </label>
+                        <label class="radio-button-field w-radio">
+                          <input class="w-form-formradioinput radio-button-2 w-radio-input" data-name="confirmed" id="No" name="confirmed" required type="radio" value="No" />
+                          <span class="radio-button-label-2 w-form-label" for="No">Không, mình sẽ gửi lời chúc phúc từ xa</span>
+                        </label>
+                      </div>
+                      <input class="button w-button" data-wait="Please wait..." type="submit" value="Xác nhận" />
+                    </form>
+
+                    <div class="w-form-done"><div>Cảm ơn bạn! Chúng mình đã nhận được phản hồi của bạn.</div></div>
+                    <div class="w-form-fail"><div>Rất tiếc! Đã có lỗi khi gửi biểu mẫu. Vui lòng thử lại.</div></div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer class="section is-footer">
+        <div class="container-large-copy">
+          <div class="margin-bottom-64">
+            <div class="wrap_flex is-align-top"><p class="heading-style-h5-copy">Cảm ơn bạn nhé</p></div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Unified script: autoplay video & intercept form -->
+  <script>
+  (() => {
+    /* 1) VIDEO: autoplay with sound; fallback muted; auto-unmute on first interaction; no loop */
+    const v =
+      document.getElementById('34352df9-6e8a-650b-b277-5554ff4f6cc1-video') ||
+      document.querySelector('.video-shell video') ||
+      document.querySelector('video');
+
+    if (v) {
+      v.loop = false;
+      v.muted = false;
+      v.playsInline = true;
+      v.setAttribute('playsinline','');
+      v.setAttribute('webkit-playsinline','');
+      v.preload = 'auto';
+
+      const tryAutoplay = async () => {
+        try {
+          await v.play(); // unmuted attempt
+        } catch (e) {
+          v.muted = true;
+          try { await v.play(); } catch (_) {}
+          const unmute = async () => {
+            v.muted = false;
+            try { await v.play(); } catch(_) {}
+            window.removeEventListener('pointerdown', unmute);
+            window.removeEventListener('keydown', unmute);
+          };
+          window.addEventListener('pointerdown', unmute, { once:true });
+          window.addEventListener('keydown', unmute, { once:true });
+        }
+      };
+
+      if (v.readyState >= 2) tryAutoplay();
+      else v.addEventListener('loadedmetadata', tryAutoplay, { once:true });
+    }
+
+    /* 2) FORM: submit via fetch, show done/fail, no redirect */
+    const form = document.getElementById('wf-form-RSVP-Form');
+    if (form) {
+      const wrap = form.closest('.w-form') || form.parentElement;
+      const done = wrap ? wrap.querySelector('.w-form-done') : null;
+      const fail = wrap ? wrap.querySelector('.w-form-fail') : null;
+
+      if (done) done.style.display = 'none';
+      if (fail) fail.style.display = 'none';
+
+      form.removeAttribute('data-redirect');
+      form.removeAttribute('redirect');
+
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        if (done) done.style.display = 'none';
+        if (fail) fail.style.display = 'none';
+
+        const btn = form.querySelector('input[type="submit"], button[type="submit"]');
+        const setBtn = (txt, dis) => {
+          if (!btn) return;
+          btn.disabled = !!dis;
+          if ('value' in btn) {
+            btn.dataset.orig = btn.dataset.orig || btn.value;
+            if (txt != null) btn.value = txt;
+          } else {
+            btn.dataset.orig = btn.dataset.orig || btn.textContent;
+            if (txt != null) btn.textContent = txt;
+          }
+        };
+        setBtn('Đang gửi...', true);
+
+        const url = form.action;
+        const fd  = new FormData(form);
+
+        fetch(url, { method: 'POST', body: fd, mode: 'no-cors' })
+          .then(() => {
+            if (done) done.style.display = 'block';
+            form.style.display = 'none';
+          })
+          .catch(() => {
+            if (fail) fail.style.display = 'block';
+          })
+          .finally(() => {
+            setBtn(btn?.dataset.orig || 'Gửi', false);
+          });
+      });
+    }
+  })();
+  </script>
 </body>
 </html>
