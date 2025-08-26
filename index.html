@@ -59,6 +59,9 @@
 
 
   </style>
+<style>
+  .w-form .w-form-done, .w-form .w-form-fail { display: none; }
+</style>
 </head>
 <body>
     <div class="page-wrapper">
@@ -526,7 +529,7 @@
                             <li>
                                 <div class="div-block-22">
                                     <div class="w-form">
-                                        <form action="https://script.google.com/macros/s/AKfycbwac9-UXYp5hA91dcjojT4HIeNj2YPIStiCRjw2TJd1N3t7T1D7h47yI-4eco0GQLb8/exec" class="form-2" data-name="RSVP Form" data-redirect="/" data-wf-element-id="0b2911b5-8fde-a94b-64f4-b05ac575e6da" data-wf-page-id="6878482e2444e1622802968d" id="wf-form-RSVP-Form" method="post" name="wf-form-RSVP-Form" redirect="/">
+                                        <form action="https://script.google.com/macros/s/AKfycbwac9-UXYp5hA91dcjojT4HIeNj2YPIStiCRjw2TJd1N3t7T1D7h47yI-4eco0GQLb8/exec" class="form-2" data-name="RSVP Form" data-wf-element-id="0b2911b5-8fde-a94b-64f4-b05ac575e6da" data-wf-page-id="6878482e2444e1622802968d" id="wf-form-RSVP-Form" method="post" name="wf-form-RSVP-Form">
                                             <label class="field-label-3" for="name">Tên</label><input class="text-field w-input" data-name="name" id="name" maxlength="256" name="name" placeholder="" required="" type="text" /><label class="field-label-4" for="guests">Số người đến tham dự</label><input class="w-input" data-name="guests" id="guests" maxlength="256" name="guests" placeholder="" type="text" /><label class="field-label-2" for="email">Chung vui cùng tụi mình chứ</label>
                                             <div class="div-block-26"><label class="radio-button-field-3 w-radio"><input class="w-form-formradioinput radio-button-3 w-radio-input" data-name="confirmed" id="Yes" name="confirmed" type="radio" value="Yes" /><span class="radio-button-label-3 w-form-label" for="Yes"><strong class="bold-text">CÓ</strong></span></label><label class="radio-button-field w-radio"><input class="w-form-formradioinput radio-button-2 w-radio-input" data-name="confirmed" id="No" name="confirmed" required="" type="radio" value="No" /><span class="radio-button-label-2 w-form-label" for="No">Không, mình sẽ gửi lời chúc phúc từ xa</span></label></div>
                                             <input class="button w-button" data-wait="Please wait..." style="-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" type="submit" value="Xác nhận" />
@@ -559,6 +562,57 @@
     <script src="js/webflow.schunk.36b8fb49256177c8.js" type="text/javascript"></script>
     <script src="js/webflow.schunk.51a4289a6e5774e8.js" type="text/javascript"></script>
     <script src="js/webflow.0b798d3d.7c53ad578c703ad3.js" type="text/javascript"></script>
+<script>
+(() => {
+  const form = document.getElementById('wf-form-RSVP-Form');
+  if (!form) return;
+  const wrap = form.closest('.w-form') || form.parentElement;
+  const done = wrap ? wrap.querySelector('.w-form-done') : null;
+  const fail = wrap ? wrap.querySelector('.w-form-fail') : null;
+
+  if (done) done.style.display = 'none';
+  if (fail) fail.style.display = 'none';
+
+  form.removeAttribute('data-redirect');
+  form.removeAttribute('redirect');
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+
+    if (done) done.style.display = 'none';
+    if (fail) fail.style.display = 'none';
+
+    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+    const setBtn = (txt, dis) => {
+      if (!submitBtn) return;
+      submitBtn.disabled = !!dis;
+      if ('value' in submitBtn) {
+        submitBtn.dataset.orig = submitBtn.dataset.orig || submitBtn.value;
+        if (txt != null) submitBtn.value = txt;
+      } else {
+        submitBtn.dataset.orig = submitBtn.dataset.orig || submitBtn.textContent;
+        if (txt != null) submitBtn.textContent = txt;
+      }
+    };
+    setBtn('Đang gửi...', true);
+
+    const url = form.action;
+    const fd  = new FormData(form);
+
+    fetch(url, { method: 'POST', body: fd, mode: 'no-cors' })
+      .then(() => {
+        if (done) done.style.display = 'block';
+        form.style.display = 'none';
+      })
+      .catch(() => {
+        if (fail) fail.style.display = 'block';
+      })
+      .finally(() => {
+        setBtn(submitBtn?.dataset.orig || 'Gửi', false);
+      });
+  });
+})();
+</script>
 </body>
 </html>
 
