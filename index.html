@@ -77,7 +77,7 @@
     .video-shell video{ display:block; width:100%; height:auto; z-index:0; }
     .w-background-video, .w-background-video-atom { pointer-events: auto !important; }
     .video_bg_overlay { pointer-events: none !important; }
-    .video_box { transform: none !important; opacity: 1 !important; }
+    /* removed to allow Webflow IX2 animations on .video_box */
     /* Form alerts (stay on page) */
     .w-form .w-form-done,
     .w-form .w-form-fail{
@@ -453,7 +453,13 @@
   </div>
 
   <!-- Unified script: autoplay video & intercept form -->
-  <script>
+  
+  <!-- Webflow core & interactions (restore animations) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery-3.5.1.min.js"><\/script>');</script>
+  <script src="js/webflow.js"></script>
+  <script src="js/site.webflow.js"></script>
+<script>
   (() => {
     /* 1) VIDEO: autoplay with sound; fallback muted; auto-unmute on first interaction; no loop */
     const v =
