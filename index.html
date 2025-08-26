@@ -72,13 +72,15 @@
   }
 </style>
 <style>
-  .w-form .w-form-done,
-  .w-form .w-form-fail{
-    background:#000 !important;
-    color:#fff !important;
-    padding:12px 16px;
-    border-radius:12px;
+  .video-shell{ position:relative; display:block; }
+  .video-shell video{ display:block; width:100%; height:auto; }
+  .video-play-btn{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    padding:.7rem 1.1rem; border:0; border-radius:.75rem;
+    background:#111; color:#fff; font:600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:.92;
   }
+  .video-play-btn[hidden]{ display:none; }
 </style>
 </head>
 <body>
@@ -104,7 +106,8 @@
                                          data-video-urls="videos/SaveTheDate.mp4,videos/SaveTheDate.webm"
                                          data-wf-ignore="true">
 
-                                        <video id="34352df9-6e8a-650b-b277-5554ff4f6cc1-video"
+                                        <div class="video-shell">
+<video id="34352df9-6e8a-650b-b277-5554ff4f6cc1-video"
                                                autoplay
                                                loop
                                                muted
@@ -116,6 +119,8 @@
                                             <source src="videos/SaveTheDate.mp4" type="video/mp4" data-wf-ignore="true" />
                                             <source src="videos/SaveTheDate.webm" type="video/webm" data-wf-ignore="true" />
                                         </video>
+  <button id="videoPlayBtn" class="video-play-btn" type="button" aria-label="Play video">▶ Play</button>
+</div>
                                     </div>
                                 </div>
                             </div>
@@ -553,13 +558,11 @@
                                             <input class="button w-button" data-wait="Please wait..." style="-webkit-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0.5em, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" type="submit" value="Xác nhận" />
                                         </form>
                                         <div class="w-form-done">
-  <div>Cảm ơn bạn! Tụi mình đã nhận được phản hồi của bạn.</div>
-</div>
+                                            <div>Thank you! Your submission has been received!</div>
                                         </div>
 
                                         <div class="w-form-fail">
-  <div>Rất tiếc! Đã có lỗi khi gửi biểu mẫu. Vui lòng thử lại.</div>
-</div>
+                                            <div>Oops! Something went wrong while submitting the form.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -688,6 +691,65 @@
     fail.style.backgroundColor = red;
     fail.style.color = '#7f1d1d';
   }
+})();
+</script>
+<script>
+(() => {
+  const v   = document.getElementById('34352df9-6e8a-650b-b277-5554ff4f6cc1-video');
+  const btn = document.getElementById('videoPlayBtn');
+  if (!v || !btn) return;
+
+  // Ensure desired attributes
+  v.autoplay = true;         // try to autoplay
+  v.loop = false;            // no loop
+  v.removeAttribute('loop'); // remove if present in markup
+  v.muted = false;           // we want sound on first play if allowed
+  v.playsInline = true;
+  v.setAttribute('playsinline','');
+  v.setAttribute('webkit-playsinline','');
+  v.preload = 'auto';
+  
+  // Hide button once actually playing
+  const hideBtn = () => btn.hidden = true;
+  const showBtn = (label) => { btn.textContent = label || '▶ Play'; btn.hidden = false; };
+
+  // When video ends once, show replay button
+  v.addEventListener('ended', () => {
+    // Reset to beginning (optional; user can replay from start)
+    v.currentTime = 0;
+    showBtn('▶ Play again');
+  });
+
+  // Button click: play with sound
+  btn.addEventListener('click', async () => {
+    try {
+      v.muted = false;
+      await v.play();
+      hideBtn();
+    } catch(e) {
+      // If still blocked, hint user
+      btn.textContent = 'Tap to play (sound)';
+    }
+  });
+
+  // Try autoplay with sound on load
+  const tryAuto = async () => {
+    try {
+      await v.play();        // attempt unmuted autoplay
+      hideBtn();
+    } catch(e) {
+      // Autoplay with sound is blocked => do NOT autoplay muted;
+      // just show the Play button to require user gesture
+      showBtn('▶ Play');
+    }
+  };
+
+  // If metadata already available, try immediately; otherwise wait
+  if (v.readyState >= 2) tryAuto();
+  else v.addEventListener('loadedmetadata', tryAuto, { once:true });
+
+  // Also hide button any time playback starts (e.g., from browser UI)
+  v.addEventListener('play', hideBtn);
 })();
 </script>
 </body>
