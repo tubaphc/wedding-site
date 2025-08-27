@@ -127,6 +127,39 @@
         }
       }
     </style>
+        <style>
+        .gift-cta {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .gift-cta-card {
+            background: #fff;
+            color: #111;
+            text-align: center;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        /* QR nhỏ 128px, canh giữa */
+        .gift-qr {
+            width: 128px;
+            height: 128px;
+            object-fit: contain;
+            display: block;
+            margin: 8px auto 0;
+            border-radius: 8px;
+        }
+
+        /* Nếu trước đó bạn còn dùng .gift-cta-title thì neutralize để giống chữ khác */
+        .gift-cta-title {
+            font: inherit;
+            color: inherit; /* dùng đúng font & màu mặc định của trang */
+            line-height: inherit;
+            margin: 0 0 12px; /* giữ khoảng cách nhẹ */
+        }
+    </style>
 </head>
 <body>
     <div class="page-wrapper">
@@ -607,6 +640,16 @@
                                         <div class="w-form-fail">
                                             <p class="text-size-medium">Rất tiếc! Đã có lỗi khi gửi biểu mẫu. Vui lòng thử lại.</p>
                                         </div>
+
+                                        <div id="gift-cta" class="gift-cta" aria-live="polite">
+                                            <div class="gift-cta-card">
+                                                <p class="text-size-medium">
+                                                    Gửi lời chúc từ xa?<br>
+                                                    Quét QR ngân hàng của chú rể Từ Bá Phước nha.
+                                                </p>
+                                                <img src="images/QR.jpg" alt="QR gửi quà mừng" class="gift-qr" loading="lazy">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -640,6 +683,7 @@
   const wrap = form.closest('.w-form') || form.parentElement;
   const done = wrap ? wrap.querySelector('.w-form-done') : null;
   const fail = wrap ? wrap.querySelector('.w-form-fail') : null;
+  const gift = wrap ? wrap.querySelector('#gift-cta') : null;
 
   // Ẩn sẵn 2 khối trạng thái
   if (done) done.style.display = 'none';
@@ -658,15 +702,21 @@
   };
 
   // Helper hiển thị khối trạng thái
-  const showState = (which) => {
-    if (which === 'done') {
-      if (fail) fail.style.display = 'none';
-      if (done) done.style.display = 'block';
-    } else if (which === 'fail') {
-      if (done) done.style.display = 'none';
-      if (fail) fail.style.display = 'block';
-    }
-  };
+    const showState = (which) => {
+        if (which === 'done') {
+            // Không dùng .w-form-done nữa
+            if (fail) fail.style.display = 'none';
+            if (done) done.style.display = 'block';
+            if (gift) gift.style.display = 'block'; // hiện block QR
+            form.style.display = 'none';            // ẩn form
+        } else if (which === 'fail') {
+            // Cho người dùng thử lại
+            if (gift) gift.style.display = 'none';
+            if (done) done.style.display = 'none';
+            if (fail) fail.style.display = 'block';
+            form.style.display = ''; // giữ form hiện để nhập lại
+        }
+    };
 
   // Handler submit (bắt ở capture phase để “thắng” Webflow)
   const onSubmit = (ev) => {
@@ -755,6 +805,7 @@
 </script>
 </body>
 </html>
+
 
 
 
