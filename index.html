@@ -116,20 +116,17 @@
         }
     </style>
     <style>
-  /* Mobile: luôn hiển thị 1 dòng và tự co kích thước theo chiều rộng màn hình */
-  @media (max-width: 767.98px){
-    .faqs_wrap h2.is-word.is-1{
-      white-space: nowrap;                 /* không cho xuống dòng */
-      word-break: keep-all;                /* giữ nguyên từ, không bẻ */
-      overflow: hidden;                    /* tránh tràn ngang hiếm gặp */
-      max-width: 100%;
-      line-height: 1.05;
-
-      /* co giãn theo viewport để vừa màn hình nhỏ */
-      font-size: clamp(18px, 6.8vw, 44px);
-    }
-  }
-</style>
+      /* Mobile: giữ 1 dòng, không bẻ từ */
+      @media (max-width: 767.98px){
+        .faqs_wrap h2.is-word.is-1{
+          white-space: nowrap;
+          word-break: keep-all;
+          max-width: 100%;
+          line-height: 1.06;
+          overflow: hidden; /* tránh tràn ngang hiếm gặp */
+        }
+      }
+    </style>
 </head>
 <body>
     <div class="page-wrapper">
@@ -708,8 +705,57 @@
 
   form.addEventListener('submit', onSubmit, { capture: true });
 })();</script>
+    <script>
+(() => {
+  const h = document.querySelector('.faqs_wrap h2.is-word.is-1');
+  if (!h) return;
+
+  // ưu tiên container gần nhất; nếu không có thì lấy parent
+  const getBox = () => h.closest('.margin-bottom-16') || h.parentElement;
+  const MIN = 14; // không giảm dưới 14px để giữ độ đọc
+
+  function fit() {
+    const isMobile = matchMedia('(max-width: 767.98px)').matches;
+
+    // Lưu size gốc 1 lần (để có thể khôi phục)
+    if (!h.dataset.origSize) {
+      h.dataset.origSize = getComputedStyle(h).fontSize;
+    }
+
+    if (!isMobile) {
+      // Desktop: trả lại size gốc, không can thiệp
+      h.style.fontSize = h.dataset.origSize;
+      h.style.whiteSpace = '';
+      return;
+    }
+
+    const box = getBox();
+    if (!box) return;
+
+    // Bắt đầu từ size gốc rồi mới giảm nếu cần
+    h.style.whiteSpace = 'nowrap';
+    h.style.fontSize = h.dataset.origSize;
+
+    let size = parseFloat(getComputedStyle(h).fontSize) || 32;
+    const maxW = box.clientWidth;
+
+    // Giảm từng px tới khi vừa khít hoặc chạm ngưỡng MIN
+    while (size > MIN && h.scrollWidth > maxW) {
+      size -= 1;
+      h.style.fontSize = size + 'px';
+    }
+  }
+
+  // Fit khi load, khi font web tải xong, và khi đổi kích thước
+  window.addEventListener('load', fit, { once: true });
+  if (document.fonts?.ready) document.fonts.ready.then(fit);
+  window.addEventListener('resize', fit, { passive: true });
+  window.addEventListener('orientationchange', fit, { passive: true });
+})();
+</script>
 </body>
 </html>
+
 
 
 
