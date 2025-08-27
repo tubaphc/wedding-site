@@ -115,6 +115,21 @@
             display: inline; /* hoặc để nguyên; chủ yếu là bỏ float phía trên */
         }
     </style>
+    <style>
+  /* Mobile: luôn hiển thị 1 dòng và tự co kích thước theo chiều rộng màn hình */
+  @media (max-width: 767.98px){
+    .faqs_wrap h2.is-word.is-1{
+      white-space: nowrap;                 /* không cho xuống dòng */
+      word-break: keep-all;                /* giữ nguyên từ, không bẻ */
+      overflow: hidden;                    /* tránh tràn ngang hiếm gặp */
+      max-width: 100%;
+      line-height: 1.05;
+
+      /* co giãn theo viewport để vừa màn hình nhỏ */
+      font-size: clamp(18px, 6.8vw, 44px);
+    }
+  }
+</style>
 </head>
 <body>
     <div class="page-wrapper">
@@ -695,6 +710,7 @@
 })();</script>
 </body>
 </html>
+
 
 
 
